@@ -9,7 +9,7 @@ export class Change {
             return [];
         }
         if(incomingChangeAmounts[0] > incomingTotal) {
-            throw("The total 3 cannot be represented in the given currency.");
+            throw(`The total ${incomingTotal} cannot be represented in the given currency.`);
         }
 
 
