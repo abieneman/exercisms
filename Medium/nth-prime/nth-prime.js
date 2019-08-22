@@ -16,14 +16,12 @@ export class Prime {
     let currentNumber = 3;
     let isPrime = true;
     let lastPrime = 2;
-    let halfCurrentNumber;
     
     while(counter < n) {
-      halfCurrentNumber = Math.round( (currentNumber + 2) / 2);
-      for(let j = 2; j < halfCurrentNumber; j++) {
+      for(let j = 2; j < (Math.sqrt(currentNumber) + 1); j++) {
         if( (currentNumber % j) == 0) {
           isPrime = false;
-          j = halfCurrentNumber;
+          j = currentNumber;
         }
       }
       if(isPrime) {
