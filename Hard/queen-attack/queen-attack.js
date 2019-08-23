@@ -111,28 +111,10 @@ export class QueenAttack {
             return true;
         }
 
-        let y = this.white[0];
-        let x = this.white[1];
-
-        while( (y < 8) && (x < 8) ) {
-            if( (y = this.black[1]) && (x == this.black[0]) ) {
-                return true;
-            }
-            y++;
-            x++;
+        if( ( (-1 * this.white[0]) + this.white[1]) == (-1 * this.black[0] + this.black[1]) ) {
+            return true;
         }
-
-        y = this.white[0];
-        x = this.white[1];
-
-        while( (y >= 0) && (x >= 0) ) {
-            if( (y = this.black[1]) && (x == this.black[0]) ) {
-                return true;
-            }
-            y--;
-            x--;
-        }
-
+        
         return false;
     }
 }
