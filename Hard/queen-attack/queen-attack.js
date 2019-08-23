@@ -111,10 +111,10 @@ export class QueenAttack {
             return true;
         }
 
-        if( ( (-1 * this.white[0]) + this.white[1]) == (-1 * this.black[0] + this.black[1]) ) {
+        if( ((-1 * this.white[0]) + this.white[1]) == ((-1 * this.black[0]) + this.black[1]) ) {
             return true;
         }
-        
+
         return false;
     }
 }
