@@ -5,10 +5,9 @@ export class QueenAttack {
     
         if(input) {
             this.white = input.white;
-        }
-        if(input) {
             this.black = input.black;
         }
+
         if( (this.black[0] == this.white[0]) && (this.black[1] == this.white[1]) ) {
             throw('Queens cannot share the same space');
         }
