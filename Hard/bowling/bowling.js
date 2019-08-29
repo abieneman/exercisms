@@ -1,19 +1,22 @@
 export class Bowling {
     constructor() {
       this.rolls = [];
+      this.endOfGame = false;
     }
   
     roll(rollValue) {
-        if(rollValue < 0) {
-            throw new Error('Negative roll is invalid');
+        if(this.endOfGame) {
+            throw new Error("Cannot roll after game is over");
         }
-        if(rollValue > 10) {
-            throw new Error('Pin count exceeds pins on the lane');
-        }
+
         this.rolls.push(rollValue);
+        return this.score(true);
     }
 
-    score() {
+    score(calledFromLocal) {
+        if( (this.rolls.length < 10) && (!calledFromLocal) ) {
+            throw new Error("Score cannot be taken until the end of the game");
+        }
         let frame = 1;
         let halfFrame = 1;
         let bonus1 = 0;
@@ -23,10 +26,22 @@ export class Bowling {
         let theScore = 0;
         let lastRoll = 0;
 
+        let tempRoll = [... this.rolls];
 
         while(this.rolls.length > 0) {
+            
 
             let currentRoll = this.rolls[0];
+
+            if(currentRoll < 0) {
+                throw new Error('Negative roll is invalid');
+            }
+            if(currentRoll > 10) {
+                throw new Error('Pin count exceeds pins on the lane');
+            }
+            if( (halfFrame == 2) && ((currentRoll + lastRoll) > 10) ) {
+                throw new Error("Pin count exceeds pins on the lane");
+            }
 
             if(frame < 11) {
                 theScore += currentRoll;
@@ -55,21 +70,15 @@ export class Bowling {
 
 
             if( (halfFrame == 1) && (currentRoll == 10) && (frame < 11) ) {
-                console.log("before: strike!" + "bonus1: " + bonus1 + "bonus2: " + bonus2);
                 if(bonus1 == 0) {
                     bonus1 = 2;
                 } else {
                     bonus2 = 2;
                 }
-                console.log("after: strike!" + "bonus1: " + bonus1 + "bonus2: " + bonus2);
+            }
 
-            }
-            if(currentRoll == 3) {
-                console.log(`frame ${frame} halfframe: ${halfFrame} currentRoll: ${currentRoll} lastRoll: ${lastRoll}`);
-            }
             if( (halfFrame == 2) && ((currentRoll + lastRoll) == 10) && (frame < 11) ) {
-                console.log('spare');
-                if(bonus1 != 0) {
+                if(bonus1 == 0) {
                     bonus1 = 1;
                 } else {
                     bonus2 = 1;
@@ -90,7 +99,14 @@ export class Bowling {
             lastRoll = currentRoll;
         }
 
+        if( ((bonus1 > 0) || (bonus2 > 0)) && (!calledFromLocal) ) {
+            throw new Error("Score cannot be taken until the end of the game");
+        }
 
+        this.rolls = tempRoll;
+        if( (frame > 10) && ((bonus1 == 0) && (bonus2 == 0)) ) {
+            this.endOfGame = true;
+        }
         return theScore;
     }
 }
