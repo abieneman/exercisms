@@ -20,15 +20,15 @@ describe('Queens', () => {
   });
 
   test('toString representation', () => {
-    const positioning = { white: [2, 4], black: [6, 6] };
+    const positioning = { white: [2, 0], black: [2, 1] };
     const queens = new QueenAttack(positioning);
     const board = ['_ _ _ _ _ _ _ _',
       '_ _ _ _ _ _ _ _',
-      '_ _ _ _ W _ _ _',
+      'W B _ _ _ _ _ _',
       '_ _ _ _ _ _ _ _',
       '_ _ _ _ _ _ _ _',
       '_ _ _ _ _ _ _ _',
-      '_ _ _ _ _ _ B _',
+      '_ _ _ _ _ _ _ _',
       '_ _ _ _ _ _ _ _\n'].join('\n');
     expect(queens.toString()).toEqual(board);
   });

@@ -11,92 +11,80 @@ export class QueenAttack {
         if( (this.black[0] == this.white[0]) && (this.black[1] == this.white[1]) ) {
             throw('Queens cannot share the same space');
         }
-
-        this.rows = [];
-
-        let rowString = "_ _ _ _ _ _ _ _"
-        for(let i = 0; i < 8; i++) {
-            this.rows[i] = rowString;
-        }
-
-        let whiteString;
-        switch(this.white[1]) {
-            case 0:
-                whiteString = "W _ _ _ _ _ _ _"
-                break;
-            
-            case 1:
-                whiteString = "_ W _ _ _ _ _ _"
-                break;
-
-            case 2:
-                whiteString = "_ _ W _ _ _ _ _"
-                break;
-
-            case 3:
-                whiteString = "_ _ _ W _ _ _ _"
-                break;
-
-            case 4:
-                whiteString = "_ _ _ _ W _ _ _"
-                break;
-                
-            case 5:
-                whiteString = "_ _ _ _ _ W _ _"
-                break;
-
-            case 6:
-                whiteString = "_ _ _ _ _ _ W _"
-                break;
-
-            case 7:
-                whiteString = "_ _ _ _ _ _ _ W"
-                break;            
-        }
-
-        let blackString;
-        switch(this.black[1]) {
-            case 0:
-                blackString = "B _ _ _ _ _ _ _"
-                break;
-            
-            case 1:
-                blackString = "_ B _ _ _ _ _ _"
-                break;
-
-            case 2:
-                blackString = "_ _ B _ _ _ _ _"
-                break;
-
-            case 3:
-                blackString = "_ _ _ B _ _ _ _"
-                break;
-
-            case 4:
-                blackString = "_ _ _ _ B _ _ _"
-                break;
-                
-            case 5:
-                blackString = "_ _ _ _ _ B _ _"
-                break;
-
-            case 6:
-                blackString = "_ _ _ _ _ _ B _"
-                break;
-
-            case 7:
-                blackString = "_ _ _ _ _ _ _ B"
-                break;            
-        }
-
-        this.rows[this.white[0]] = whiteString;
-        this.rows[this.black[0]] = blackString;
     }
 
     toString() {
+        let rows = [];
+
+        let rowString = "_ _ _ _ _ _ _ _"
+        for(let i = 0; i < 8; i++) {
+            rows[i] = rowString;
+        }
+
+        
+        
+        if(this.white[0] == this.black[0]) {
+            let queens = [ [], [] ];
+            if(this.white[1] < this.black[1]) {
+                queens[0][0] = 'W';
+                queens[0][1] = this.white[1];
+
+                queens[1][0] = 'B';
+                queens[1][1] = this.black[1];
+            } else {
+                queens[0][0] = 'B';
+                queens[0][1] = this.black[1];
+
+                queens[1][0] = 'W';
+                queens[1][1] = this.white[1];
+            }
+
+            let queenRow = "";
+            for(let i = 0; i < queens[0][1]; i++) {
+                queenRow += "_ ";
+            }
+            queenRow += "" + queens[0][0] + " "
+
+            for(let i = 0; i < (queens[1][1] - queens[0][1] - 1); i++) {
+                queenRow += "_ ";
+            }
+            queenRow += "" + queens[1][0];
+
+
+            while(queenRow.length < 14) {
+                queenRow += " _";
+            }
+
+            rows[this.black[0]] = queenRow;
+
+
+        } else {
+            let queenRow = "";
+            for(let i = 0; i < this.white[1]; i++) {
+                queenRow += "_ ";
+            }
+            queenRow += "W"
+            while(queenRow.length < 14) {
+                queenRow += " _";
+            }
+            rows[this.white[0]] = queenRow;
+
+
+            queenRow = "";
+            for(let i = 0; i < this.black[1]; i++) {
+                queenRow += "_ ";
+            }
+            queenRow += "B"
+            while(queenRow.length < 14) {
+                queenRow += " _";
+            }
+            rows[this.black[0]] = queenRow;
+        }
+
+
         let returnString = "";
         for(let i = 0; i < 8; i++) {
-            returnString += this.rows[i];
+            returnString += rows[i];
             returnString += '\n';
         }
         return returnString;

@@ -22,20 +22,6 @@ export class LinkedList {
     currentNode.next.prev = currentNode;
   }
 
-  display() {
-    console.log("displaying");
-    let currentNode = this.head;
-    let first = true;
-    while( (currentNode != null) ) {
-      if(!first) {
-        console.log(`prev ${currentNode.prev.value}`);
-      }
-      first = false;
-      console.log(currentNode.value);
-      currentNode = currentNode.next;
-    }
-  }
-
   pop() {
     if(!this.head) {
       return null;
